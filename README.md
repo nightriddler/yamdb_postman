@@ -18,6 +18,9 @@ Email: admin@admin.ru
 
 - в разделе `Environments` импортируем `YaMDB_env.postman_environment.json`.
 
+>Не забываем выбрать окружение установив напротив галочку.
+>![select](/image/select_env.png)
+
 Тесты.
 
 1. Запускаем сервер.
@@ -33,7 +36,8 @@ Email: admin@admin.ru
 
 ![run](/image/run.png)
 
-Снимаем галочки с первых двух запросов (`auth/signup` и `auth/token`).
+Снимаем галочки с первых двух запросов `auth/signup` и `auth/token`.
+> Чтобы сохранялись результаты запросов, ставим галочку `Persist responses for a session`
 
 ![prepare](/image/prepare.png)
 
@@ -41,6 +45,9 @@ Email: admin@admin.ru
 
 ![res](/image/res.png)
 
+Если указан `Persist responses for a session`, то нажав на имя теста можно увидеть запрос
+
+![check](/image/check.png)
 
 Важно:
 Тесты идут в хронологическом порядке, в конце все созданные объекты удаляются.  Проверяется схема ответов. Не проверяется бизнес-логика (пока).
