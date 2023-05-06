@@ -1,0 +1,1762 @@
+{
+	"info": {
+		"_postman_id": "6cb7877f-f627-4fa8-b3d8-1b7717ceea5c",
+		"name": "YaMDb API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15416174"
+	},
+	"item": [
+		{
+			"name": "auth/",
+			"item": [
+				{
+					"name": "signup/ Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+									"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/auth/signup/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "token/ Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"token\"'] = data.hasOwnProperty('token');",
+									"",
+									"pm.environment.set(\"token\",data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{username}}\",\n  \"confirmation_code\": \"{{confirmation_code}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/auth/token/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users/",
+			"item": [
+				{
+					"name": "me/",
+					"item": [
+						{
+							"name": "Любой авторизованный пользователь",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+											"tests['Есть поле \"role\"'] = data.hasOwnProperty('role');",
+											"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+											"tests['Есть поле \"first_name\"'] = data.hasOwnProperty('first_name');",
+											"tests['Есть поле \"last_name\"'] = data.hasOwnProperty('last_name');",
+											"tests['Есть поле \"bio\"'] = data.hasOwnProperty('bio');",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{API_URL}}/api/v1/users/me/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Любой авторизованный пользователь",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+											"tests['Есть поле \"role\"'] = data.hasOwnProperty('role');",
+											"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+											"tests['Есть поле \"first_name\"'] = data.hasOwnProperty('first_name');",
+											"tests['Есть поле \"last_name\"'] = data.hasOwnProperty('last_name');",
+											"tests['Есть поле \"bio\"'] = data.hasOwnProperty('bio');",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{email}}\",\n  \"first_name\": \"Иванов\",\n  \"last_name\": \"Петр\",\n  \"bio\": \"студент\",\n  \"role\": \"doesnt_change\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/api/v1/users/me/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var user = data.results[0];",
+									"",
+									"tests['Есть поле \"username\"'] = user.hasOwnProperty('username');",
+									"tests['Есть поле \"role\"'] = user.hasOwnProperty('role');",
+									"tests['Есть поле \"email\"'] = user.hasOwnProperty('email');",
+									"tests['Есть поле \"first_name\"'] = user.hasOwnProperty('first_name');",
+									"tests['Есть поле \"last_name\"'] = user.hasOwnProperty('last_name');",
+									"tests['Есть поле \"bio\"'] = user.hasOwnProperty('bio');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{username}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+									"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+									"tests['Есть поле \"first_name\"'] = data.hasOwnProperty('first_name');",
+									"tests['Есть поле \"last_name\"'] = data.hasOwnProperty('last_name');",
+									"tests['Есть поле \"bio\"'] = data.hasOwnProperty('bio');",
+									"tests['Есть поле \"role\"'] = data.hasOwnProperty('role');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						},
+						"description": "с токеном"
+					},
+					"response": []
+				},
+				{
+					"name": "{{another_username}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+									"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+									"tests['Есть поле \"first_name\"'] = data.hasOwnProperty('first_name');",
+									"tests['Есть поле \"last_name\"'] = data.hasOwnProperty('last_name');",
+									"tests['Есть поле \"bio\"'] = data.hasOwnProperty('bio');",
+									"tests['Есть поле \"role\"'] = data.hasOwnProperty('role');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{another_username}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"username\"'] = data.hasOwnProperty('username');",
+									"tests['Есть поле \"email\"'] = data.hasOwnProperty('email');",
+									"tests['Есть поле \"first_name\"'] = data.hasOwnProperty('first_name');",
+									"tests['Есть поле \"last_name\"'] = data.hasOwnProperty('last_name');",
+									"tests['Есть поле \"bio\"'] = data.hasOwnProperty('bio');",
+									"tests['Есть поле \"role\"'] = data.hasOwnProperty('role');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{another_username}}\",\n  \"email\": \"random@example.com\",\n  \"first_name\": \"patch_string\",\n  \"last_name\": \"patch_string\",\n  \"bio\": \"patch_string\",\n  \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{another_username}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var category = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"name\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\"'] = category.hasOwnProperty('slug');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{categories_name}}\",\n  \"slug\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/categories/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var category = data.results[0];",
+									"",
+									"tests['Есть поле \"name\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\"'] = category.hasOwnProperty('slug');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/categories/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{categories_name}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "genres/",
+			"item": [
+				{
+					"name": "Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var category = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"name\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\"'] = category.hasOwnProperty('slug');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{genre_name}}\",\n  \"slug\": \"{{genre_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/genres/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genres",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var data = JSON.parse(responseBody);",
+									"var category = data.results[0];",
+									"",
+									"tests['Есть поле \"name\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\"'] = category.hasOwnProperty('slug');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/genres/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genres",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{genre_name}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "title/",
+			"item": [
+				{
+					"name": "Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"var title = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = title.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(title.id);",
+									"",
+									"tests['Есть поле \"name\"'] = title.hasOwnProperty('name');",
+									"",
+									"tests['Есть поле \"year\"'] = title.hasOwnProperty('year');",
+									"tests['Поле \"year\" это число'] = Number.isInteger(title.year);",
+									"",
+									"tests['Есть поле \"rating\"'] = title.hasOwnProperty('rating');",
+									"tests['Поле \"rating\" это число'] = Number.isInteger(title.rating);",
+									"",
+									"tests['Есть поле \"description\"'] = title.hasOwnProperty('description');",
+									"",
+									"tests['Есть поле \"genre\"'] = title.hasOwnProperty('genre');",
+									"tests['Поле \"genre\" это список'] = Array.isArray(title.genre);",
+									"",
+									"var genre = title.genre[0];",
+									"tests['Есть поле \"name\" в словаре списка \"genre\"'] = genre.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре списка \"genre\"'] = genre.hasOwnProperty('slug');",
+									"",
+									"tests['Есть поле \"category\"'] = title.hasOwnProperty('category');",
+									"",
+									"var category = title.category;",
+									"tests['Есть поле \"name\" в словаре \"category\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');",
+									"",
+									"pm.environment.set(\"title_id\",title.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": {{title_year}},\n  \"description\": \"description about \",\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"var title = data.results[0];",
+									"",
+									"tests['Есть поле \"id\"'] = title.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(title.id);",
+									"",
+									"tests['Есть поле \"name\"'] = title.hasOwnProperty('name');",
+									"",
+									"tests['Есть поле \"year\"'] = title.hasOwnProperty('year');",
+									"tests['Поле \"year\" это число'] = Number.isInteger(title.year);",
+									"",
+									"tests['Есть поле \"rating\"'] = title.hasOwnProperty('rating');",
+									"tests['Поле \"rating\" это число'] = Number.isInteger(title.rating);",
+									"",
+									"tests['Есть поле \"description\"'] = title.hasOwnProperty('description');",
+									"",
+									"tests['Есть поле \"genre\"'] = title.hasOwnProperty('genre');",
+									"tests['Поле \"genre\" это список'] = Array.isArray(title.genre);",
+									"var genre = title.genre[0];",
+									"tests['Есть поле \"name\" в словаре списка \"genre\"'] = genre.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре списка \"genre\"'] = genre.hasOwnProperty('slug');",
+									"",
+									"tests['Есть поле \"category\"'] = title.hasOwnProperty('category');",
+									"",
+									"var category = title.category;",
+									"tests['Есть поле \"name\" в словаре \"category\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "{{categories_slug}}",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{title_name}}",
+									"disabled": true
+								},
+								{
+									"key": "genre",
+									"value": "{{genre_slug}}",
+									"disabled": true
+								},
+								{
+									"key": "year",
+									"value": "{{title_year}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{title_id}}/ Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var title = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = title.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(title.id);",
+									"",
+									"tests['Есть поле \"name\"'] = title.hasOwnProperty('name');",
+									"",
+									"tests['Есть поле \"year\"'] = title.hasOwnProperty('year');",
+									"tests['Поле \"year\" это число'] = Number.isInteger(title.year);",
+									"",
+									"tests['Есть поле \"rating\"'] = title.hasOwnProperty('rating');",
+									"tests['Поле \"rating\" это число'] = Number.isInteger(title.rating);",
+									"",
+									"tests['Есть поле \"description\"'] = title.hasOwnProperty('description');",
+									"",
+									"tests['Есть поле \"genre\"'] = title.hasOwnProperty('genre');",
+									"tests['Поле \"genre\" это список'] = Array.isArray(title.genre);",
+									"",
+									"var genre = title.genre[0];",
+									"tests['Есть поле \"name\" в словаре списка \"genre\"'] = genre.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре списка \"genre\"'] = genre.hasOwnProperty('slug');",
+									"",
+									"tests['Есть поле \"category\"'] = title.hasOwnProperty('category');",
+									"",
+									"var category = title.category;",
+									"tests['Есть поле \"name\" в словаре \"category\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{title_id}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var title = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = title.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(title.id);",
+									"",
+									"tests['Есть поле \"name\"'] = title.hasOwnProperty('name');",
+									"",
+									"tests['Есть поле \"year\"'] = title.hasOwnProperty('year');",
+									"tests['Поле \"year\" это число'] = Number.isInteger(title.year);",
+									"",
+									"tests['Есть поле \"rating\"'] = title.hasOwnProperty('rating');",
+									"tests['Поле \"rating\" это число'] = Number.isInteger(title.rating);",
+									"",
+									"tests['Есть поле \"description\"'] = title.hasOwnProperty('description');",
+									"",
+									"tests['Есть поле \"genre\"'] = title.hasOwnProperty('genre');",
+									"tests['Поле \"genre\" это список'] = Array.isArray(title.genre);",
+									"",
+									"var genre = title.genre[0];",
+									"tests['Есть поле \"name\" в словаре списка \"genre\"'] = genre.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре списка \"genre\"'] = genre.hasOwnProperty('slug');",
+									"",
+									"tests['Поле \"category\" это список'] = Array.isArray(title.category);",
+									"",
+									"var category = title.category;",
+									"tests['Есть поле \"name\" в словаре \"category\"'] = category.hasOwnProperty('name');",
+									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');",
+									"tests['Поле \"category\" это список'] = Array.isArray(title.category);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"patch_name\",\n  \"year\": -1,\n  \"description\": \"patch_description\",\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "titles/{{title_id}}/reviews/",
+			"item": [
+				{
+					"name": "Аутентифицированные пользователи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var review = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = review.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(review.id);",
+									"",
+									"tests['Есть поле \"text\"'] = review.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = review.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"score\"'] = review.hasOwnProperty('score');",
+									"tests['Поле \"score\" это число'] = Number.isInteger(review.score);",
+									"",
+									"tests['Есть поле \"pub_date\"'] = review.hasOwnProperty('pub_date');",
+									"",
+									"pm.environment.set(\"review_id\",review.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"string\",\n  \"score\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"var review = data.results[0];",
+									"",
+									"tests['Есть поле \"id\"'] = review.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(review.id);",
+									"",
+									"tests['Есть поле \"text\"'] = review.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = review.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"score\"'] = review.hasOwnProperty('score');",
+									"tests['Поле \"score\" это число'] = Number.isInteger(review.score);",
+									"",
+									"tests['Есть поле \"pub_date\"'] = review.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{review_id}}/ Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var review = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = review.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(review.id);",
+									"",
+									"tests['Есть поле \"text\"'] = review.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = review.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"score\"'] = review.hasOwnProperty('score');",
+									"tests['Поле \"score\" это число'] = Number.isInteger(review.score);",
+									"",
+									"tests['Есть поле \"pub_date\"'] = review.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{review_id}}/ Автор отзыва, модератор или администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var review = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = review.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(review.id);",
+									"",
+									"tests['Есть поле \"text\"'] = review.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = review.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"score\"'] = review.hasOwnProperty('score');",
+									"tests['Поле \"score\" это число'] = Number.isInteger(review.score);",
+									"",
+									"tests['Есть поле \"pub_date\"'] = review.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"string2\",\n  \"score\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "titles/{{title_id}}/reviews/{{review_id}}/comments/",
+			"item": [
+				{
+					"name": "Аутентифицированные пользователи",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"var comment = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = comment.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(comment.id);",
+									"",
+									"tests['Есть поле \"text\"'] = comment.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = comment.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"pub_date\"'] = comment.hasOwnProperty('pub_date');",
+									"",
+									"pm.environment.set(\"comment_id\",comment.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var data = JSON.parse(responseBody);",
+									"",
+									"var comment = data.results[0];",
+									"",
+									"tests['Есть поле \"id\"'] = comment.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(comment.id);",
+									"",
+									"tests['Есть поле \"text\"'] = comment.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = comment.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"pub_date\"'] = comment.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{comment_id}}/ Доступно без токена",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var comment = JSON.parse(responseBody);",
+									"",
+									"tests['Есть поле \"id\"'] = comment.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(comment.id);",
+									"",
+									"tests['Есть поле \"text\"'] = comment.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = comment.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"pub_date\"'] = comment.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/{{comment_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								"comments",
+								"{{comment_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{comment_id}}/ Автор комментария, модератор или администратор.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var comment = JSON.parse(responseBody);",
+									"",
+									"",
+									"tests['Есть поле \"id\"'] = comment.hasOwnProperty('id');",
+									"tests['Поле \"id\" это число'] = Number.isInteger(comment.id);",
+									"",
+									"tests['Есть поле \"text\"'] = comment.hasOwnProperty('text');",
+									"",
+									"tests['Есть поле \"author\"'] = comment.hasOwnProperty('author');",
+									"",
+									"tests['Есть поле \"pub_date\"'] = comment.hasOwnProperty('pub_date');",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"text_comment\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/{{comment_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								"comments",
+								"{{comment_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete_after_test",
+			"item": [
+				{
+					"name": "{{comment_id}}/ Автор комментария, модератор или администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/comments/{{comment_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								"comments",
+								"{{comment_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{review_id}}/ Автор отзыва, модератор или администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/reviews/{{review_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								"reviews",
+								"{{review_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{title_id}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"patch_name\",\n  \"year\": -1,\n  \"description\": \"patch_description\",\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/{{title_id}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								"{{title_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{categories_slug}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/categories/{{categories_slug}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"{{categories_slug}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{genre_slug}}/ Администратор",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/genres/{{genre_slug}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"genres",
+								"{{genre_slug}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "app_token",
+			"value": ""
+		}
+	]
+}
