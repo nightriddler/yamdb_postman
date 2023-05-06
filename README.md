@@ -19,6 +19,7 @@ Email: admin@admin.ru
 - в разделе `Environments` импортируем `YaMDB_env.postman_environment.json`.
 
 >Не забываем выбрать окружение установив напротив галочку.
+>
 >![select](/image/select_env.png)
 
 Тесты.
