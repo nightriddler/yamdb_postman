@@ -31,15 +31,15 @@ Email: admin@admin.ru
 
 3. Далее в `Collections` напротив `YaMDb API` жмем три точки и выбираем `Run collections`.
 
-[!run](/image/run.png)
+![run](/image/run.png)
 
 Снимаем галочки с первых двух запросов (`auth/signup` и `auth/token`).
 
-[!prepare](/image/prepare.png)
+![prepare](/image/prepare.png)
 
 Запускаем. 
 
-[!res](/image/res.png)
+![res](/image/res.png)
 
 
 Важно:
