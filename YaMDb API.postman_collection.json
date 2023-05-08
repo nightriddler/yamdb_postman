@@ -984,12 +984,9 @@
 									"tests['Есть поле \"name\" в словаре списка \"genre\"'] = genre.hasOwnProperty('name');",
 									"tests['Есть поле \"slug\" в словаре списка \"genre\"'] = genre.hasOwnProperty('slug');",
 									"",
-									"tests['Поле \"category\" это список'] = Array.isArray(title.category);",
-									"",
 									"var category = title.category;",
 									"tests['Есть поле \"name\" в словаре \"category\"'] = category.hasOwnProperty('name');",
-									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');",
-									"tests['Поле \"category\" это список'] = Array.isArray(title.category);"
+									"tests['Есть поле \"slug\" в словаре \"category\"'] = category.hasOwnProperty('slug');"
 								],
 								"type": "text/javascript"
 							}
