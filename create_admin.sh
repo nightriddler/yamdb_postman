@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); u, _ = User.objects.get_or_create(username='admin'); u.is_superuser = True; u.is_staff = True; u.email = 'admin@admin.ru'; u.set_password('admin'); u.save();" | python manage.py shell
