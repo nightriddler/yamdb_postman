@@ -13,6 +13,12 @@ Email: admin@admin.ru
 ...
 ```
 
+> Можно воспользоваться сприптом `create_admin.sh` запустив его в директории с `manage.py`.
+>```bash
+>bash ./create_admin.sh 
+>```
+
+
 3. В постмане:
 - в разделе `Collectons` импортируем `YaMDb API.postman_collection.json`.
 
