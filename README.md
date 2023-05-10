@@ -54,7 +54,7 @@ Email: admin@admin.ru
 
 >Тесты идут в хронологическом порядке, в конце все созданные объекты удаляются.  
 
-![res](/image/res2.png)
+![res](/image/res.png)
 
 Если указан `Persist responses for a session`, то нажав на имя теста можно увидеть запрос
 
