@@ -13,14 +13,14 @@ Email: admin@admin.ru
 ...
 ```
 
-> Можно воспользоваться сприптом `create_admin.sh` запустив его в директории с `manage.py`.
+> Тоже самое можно сделать сприптом `create_admin.sh` запустив его в директории с `manage.py`.
 >```bash
 >bash ./create_admin.sh 
 >```
 
 
 3. В постмане:
-- в разделе `Collectons` импортируем `YaMDb API.postman_collection.json`.
+- в разделе `Collectons` импортируем `YaMDb API.postman_collection.json` и `YaMDb API logic.postman_collection.json`.
 
 - в разделе `Environments` импортируем `YaMDB_env.postman_environment.json`.
 
@@ -39,7 +39,9 @@ Email: admin@admin.ru
 3. Отправляем запрос на `auth/token`. Полученный токен автоматически подцепится к окружению. 
 >Дальше эти ручки дергать не будем
 
-3. Далее в `Collections` напротив `YaMDb API` жмем три точки и выбираем `Run collection`.
+### Тесты схемы
+ 
+В `Collections` напротив `YaMDb API` жмем три точки и выбираем `Run collection`.
 
 ![run](/image/run.png)
 
@@ -50,12 +52,24 @@ Email: admin@admin.ru
 
 Запускаем. 
 
-![res](/image/res.png)
+>Тесты идут в хронологическом порядке, в конце все созданные объекты удаляются.  
+
+![res](/image/res2.png)
 
 Если указан `Persist responses for a session`, то нажав на имя теста можно увидеть запрос
 
 ![check](/image/check.png)
 
-Важно:
-Тесты идут в хронологическом порядке, в конце все созданные объекты удаляются.  Проверяется схема ответов. Не проверяется бизнес-логика (пока).
- 
+### Тесты логики
+
+В `Collections` напротив `YaMDb API logic` жмем три точки и выбираем `Run collection`.
+
+> Чтобы сохранялись результаты запросов, ставим галочку `Persist responses for a session`
+
+>Перед запуском нужно получить токен (см. выше).
+
+Запускаем.
+
+![logic](/image/res_logic.png)
+
+В тестах не тестируются роли (пока) и возможно что-то еще.
