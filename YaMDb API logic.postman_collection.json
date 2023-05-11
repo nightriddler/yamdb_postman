@@ -10,13 +10,13 @@
 			"name": "auth/",
 			"item": [
 				{
-					"name": "Юзернейм 'me' при аутентификации",
+					"name": "Некорректный confirmation_code",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Нельзя использовать `me`. Статус 400.\", function () {",
+									"pm.test(\"Неверный `confirmatiom_code`. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
 									""
@@ -30,7 +30,51 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"me\"\n}",
+							"raw": "{\n  \"username\": \"{{username}}\",\n  \"confirmation_code\": \"incorrect_code\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/auth/token/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Недопустимые символовы в username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя использовать недопустимые символы в username. Статус 400.\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"@!=\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,13 +187,13 @@
 					"response": []
 				},
 				{
-					"name": "Недопустимые символовы в username",
+					"name": "Юзернейм 'me' при аутентификации",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Нельзя использовать недопустимые символы в username. Статус 400.\", function () {",
+									"pm.test(\"Нельзя использовать `me`. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
 									""
@@ -163,7 +207,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"@!=\"\n}",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"me\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -180,50 +224,6 @@
 								"v1",
 								"auth",
 								"signup",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Некорректный confirmation_code",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Неверный `confirmatiom_code`. Статус 400.\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{username}}\",\n  \"confirmation_code\": \"incorrect_code\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/auth/token/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"token",
 								""
 							]
 						}
@@ -272,7 +272,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{email}}\",\n  \"first_name\": \"Иванов\",\n  \"last_name\": \"Петр\",\n  \"bio\": \"студент\",\n  \"role\": \"moderator\"\n}",
+									"raw": "{\n  \"role\": \"moderator\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -325,7 +325,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"username\": \"me\",\n  \"email\": \"{{email}}\",\n  \"first_name\": \"Иванов\",\n  \"last_name\": \"Петр\",\n  \"bio\": \"студент\",\n  \"role\": \"moderator\"\n}",
+									"raw": "{\n  \"username\": \"me\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -534,7 +534,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"random@example.com\",\n  \"first_name\": \"patch_string\",\n  \"last_name\": \"patch_string\",\n  \"bio\": \"patch_string\",\n  \"role\": \"admin\"\n}",
+							"raw": "{\n  \"username\": \"{{username}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -584,7 +584,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{another_username}}\",\n  \"email\": \"{{email}}\",\n  \"first_name\": \"patch_string\",\n  \"last_name\": \"patch_string\",\n  \"bio\": \"patch_string\",\n  \"role\": \"admin\"\n}",
+							"raw": "{\n  \"email\": \"{{email}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -759,7 +759,7 @@
 			"name": "title/",
 			"item": [
 				{
-					"name": "Отрицательный год",
+					"name": "Создание с отрицательным годом",
 					"event": [
 						{
 							"listen": "test",
@@ -802,7 +802,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": -1,\n  \"description\": \"description about \",\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": -1,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -988,7 +988,7 @@
 					"response": []
 				},
 				{
-					"name": "Отрицательный год",
+					"name": "Изменение с отрицательным годом",
 					"event": [
 						{
 							"listen": "test",
@@ -1004,7 +1004,7 @@
 									"    var title = pm.response.json();",
 									"",
 									"    pm.test(\"Можно установить отрицательный год\", () => {",
-									"        pm.expect(title.year).to.eql(-1);",
+									"        pm.expect(title.year).to.eql(-2);",
 									"    });",
 									"}"
 								],
@@ -1023,7 +1023,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"patch_name\",\n  \"year\": -1,\n  \"description\": \"patch_description\",\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"raw": "{\n  \"year\": -2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
