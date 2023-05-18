@@ -233,423 +233,6 @@
 			]
 		},
 		{
-			"name": "users/",
-			"item": [
-				{
-					"name": "me/",
-					"item": [
-						{
-							"name": "Переназначение роли",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Роль не переназначается\", () => {",
-											"  const responseJson = pm.response.json();",
-											"  pm.expect(responseJson.role).to.not.eql(\"moderator\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"role\": \"moderator\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{API_URL}}/api/v1/users/me/",
-									"host": [
-										"{{API_URL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"users",
-										"me",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Смена юзернейма на 'me'",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Статус 400. Нельзя использовать юзернейм `me`.\", function () {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"username\": \"me\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{API_URL}}/api/v1/users/me/",
-									"host": [
-										"{{API_URL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"users",
-										"me",
-										""
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Создание пользователя",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								""
-							]
-						},
-						"description": "с токеном"
-					},
-					"response": []
-				},
-				{
-					"name": "Запрет создания пользователя с одинаковым юзернеймом",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Нельзя создать пользователя с одинаковым юзернеймом\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"random@mail.ru\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								""
-							]
-						},
-						"description": "с токеном"
-					},
-					"response": []
-				},
-				{
-					"name": "Запрет создания пользователя с одинаковой почтой",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Нельзя создать пользователя с одинаковой почтой\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"random_username\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								""
-							]
-						},
-						"description": "с токеном"
-					},
-					"response": []
-				},
-				{
-					"name": "Пользователь с таким юзернеймом есть в БД",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Нельзя изменить юзернейм пользователя на имеющийся в БД\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{username}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"{{another_username}}",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Пользователь с такой почтой есть в БД",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Нельзя изменить почту пользователя на имеющуюся в БД\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"{{email}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"{{another_username}}",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Удаление пользователя",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"{{another_username}}",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "categories",
 			"item": [
 				{
@@ -759,7 +342,56 @@
 			"name": "title/",
 			"item": [
 				{
-					"name": "Создание с отрицательным годом",
+					"name": "Создать с отрицательным годом",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Можно установить отрицательный год\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": -1,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создать произведение для тестирования",
 					"event": [
 						{
 							"listen": "test",
@@ -773,15 +405,6 @@
 									"",
 									"if(is201Response){",
 									"    var title = pm.response.json();",
-									"",
-									"    pm.test(\"Есть поле 'year'\", function () {",
-									"        pm.expect(title).to.have.property('year');",
-									"    });",
-									"",
-									"    pm.test(\"Можно установить отрицательный год\", () => {",
-									"        pm.expect(title.year).to.eql(-1);",
-									"    });",
-									"    ",
 									"    pm.test(\"'title_id' установлен в environment\", function () {",
 									"        pm.environment.set(\"title_id\",title.id);",
 									"    });",
@@ -802,7 +425,56 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": -1,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": {{title_year}},\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создать в будущем",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя добавлять произведения, которые еще не вышли. Статус 400.\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": 2100,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -981,6 +653,57 @@
 								{
 									"key": "name",
 									"value": "{{title_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Фильтрация по year",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var is200Response = responseCode.code === 200;",
+									"",
+									"if(is200Response){",
+									"    var data = pm.response.json();",
+									"    if (data.results.length){",
+									"        var title = data.results[0]",
+									"        pm.test(\"Фильтрация по имени произведения\", () => {",
+									"            pm.expect(title.name).to.be.eql(pm.environment.get(\"title_name\"));",
+									"        });",
+									"    };",
+									"};"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/?year=-1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "-1"
 								}
 							]
 						}
@@ -1379,6 +1102,476 @@
 								"{{review_id}}",
 								"comments",
 								"{{comment_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users/",
+			"item": [
+				{
+					"name": "Создание пользователя",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						},
+						"description": "с токеном"
+					},
+					"response": []
+				},
+				{
+					"name": "Запрет создания пользователя с одинаковым юзернеймом",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя создать пользователя с одинаковым юзернеймом\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"random@mail.ru\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						},
+						"description": "с токеном"
+					},
+					"response": []
+				},
+				{
+					"name": "Запрет создания пользователя с одинаковой почтой",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя создать пользователя с одинаковой почтой\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"random_username\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						},
+						"description": "с токеном"
+					},
+					"response": []
+				},
+				{
+					"name": "Пользователь с таким юзернеймом есть в БД",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя изменить юзернейм пользователя на имеющийся в БД\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Пользователь с такой почтой есть в БД",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя изменить почту пользователя на имеющуюся в БД\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{email}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удаление пользователя",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/{{another_username}}/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{another_username}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создание пользователя me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Можно создать пользователя me\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"me\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						},
+						"description": "с токеном"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "me/",
+			"item": [
+				{
+					"name": "Переназначение роли",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Роль не переназначается\", () => {",
+									"  const responseJson = pm.response.json();",
+									"  pm.expect(responseJson.role).to.not.eql(\"moderator\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"moderator\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/me/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Смена юзернейма на 'me'",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Статус 400. Нельзя использовать юзернейм `me`.\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"me\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/users/me/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
 								""
 							]
 						}
