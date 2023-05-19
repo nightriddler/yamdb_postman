@@ -542,7 +542,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"user\"\n}",
+							"raw": "{\n  \"username\": \"{{another_username}}\", \n  \"email\": \"{{another_email}}\",\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"bio\": \"string\",\n  \"role\": \"moderator\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

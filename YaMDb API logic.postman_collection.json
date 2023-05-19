@@ -104,7 +104,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Нельзя повторно регистрировать email. Статус 400.\", function () {",
+									"pm.test(\"Нельзя повторно регистрировать username. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
 									""
@@ -148,7 +148,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Нельзя повторно регистрировать username. Статус 400.\", function () {",
+									"pm.test(\"Нельзя повторно регистрировать email. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
 									"",
@@ -391,6 +391,55 @@
 					"response": []
 				},
 				{
+					"name": "Создать в будущем",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Нельзя добавлять произведения, которые еще не вышли. Статус 400.\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": 2100,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/titles/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"titles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Создать произведение для тестирования",
 					"event": [
 						{
@@ -426,55 +475,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": {{title_year}},\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/api/v1/titles/",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"titles",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Создать в будущем",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Нельзя добавлять произведения, которые еще не вышли. Статус 400.\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"{{title_name}}\",\n  \"year\": 2100,\n  \"genre\": [\n    \"{{genre_slug}}\"\n  ],\n  \"category\": \"{{categories_slug}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1572,6 +1572,55 @@
 								"v1",
 								"users",
 								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Повторная регистрация",
+			"item": [
+				{
+					"name": "Повторный запрос кода",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Можно повторно запросить код авторизации. Статус 200.\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/api/v1/auth/signup/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup",
 								""
 							]
 						}
