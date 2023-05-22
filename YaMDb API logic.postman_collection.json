@@ -19,7 +19,16 @@
 									"pm.test(\"Неверный `confirmatiom_code`. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
-									""
+									"",
+									"var is400Response = responseCode.code === 400;",
+									"",
+									"if(is400Response){",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.test(\"Есть поле 'confirmation_code'\", function () {",
+									"        pm.expect(jsonData).to.have.property('confirmation_code');",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -62,8 +71,7 @@
 								"exec": [
 									"pm.test(\"Нельзя использовать недопустимые символы в username. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
-									"});",
-									""
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -107,7 +115,15 @@
 									"pm.test(\"Нельзя повторно регистрировать username. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
-									""
+									"var is400Response = responseCode.code === 400;",
+									"",
+									"if(is400Response){",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.test(\"Есть поле 'username'\", function () {",
+									"        pm.expect(jsonData).to.have.property('username');",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -152,7 +168,15 @@
 									"    pm.response.to.have.status(400);",
 									"});",
 									"",
-									""
+									"var is400Response = responseCode.code === 400;",
+									"",
+									"if(is400Response){",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.test(\"Есть поле 'email'\", function () {",
+									"        pm.expect(jsonData).to.have.property('email');",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -196,7 +220,16 @@
 									"pm.test(\"Нельзя использовать `me`. Статус 400.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
-									""
+									"",
+									"var is400Response = responseCode.code === 400;",
+									"",
+									"if(is400Response){",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.test(\"Есть поле 'username'\", function () {",
+									"        pm.expect(jsonData).to.have.property('username');",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -1478,7 +1511,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Можно создать пользователя me\", function () {",
+									"pm.test(\"Можно создать пользователя me. Незабудьте удалить пользователя через админку.\", function () {",
 									"    pm.response.to.have.status(400);",
 									"});",
 									""
@@ -1540,7 +1573,7 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Роль не переназначается\", () => {",
+									"pm.test(\"Роль не переназначена\", () => {",
 									"  const responseJson = pm.response.json();",
 									"  pm.expect(responseJson.role).to.not.eql(\"moderator\");",
 									"});"
