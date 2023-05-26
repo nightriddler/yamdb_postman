@@ -58,7 +58,7 @@ Email: admin@admin.ru
 
 ![res](/image/res.png)
 
-Если указан `Persist responses for a session`, то нажав на имя теста можно увидеть запрос
+Если указан `Persist responses for a session`, то нажав на тест можно увидеть запрос
 
 ![check](/image/check.png)
 
